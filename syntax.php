@@ -84,6 +84,7 @@ class syntax_plugin_ifauthex extends DokuWiki_Syntax_Plugin
 
         // never cache
         $renderer->nocache();
+        global $TOC;
 
         switch ($state) {
             case DOKU_LEXER_ENTER:
@@ -105,6 +106,7 @@ class syntax_plugin_ifauthex extends DokuWiki_Syntax_Plugin
                         $renderer->meta['ifauthex.originalToc'] = &$renderer->toc;
                         $ignoredToc = [];
                         $renderer->toc = &$ignoredToc;
+                        $TOC = $ignoredToc;
 
                         $renderer->meta['ifauthex.isDiverted'] = true;
 
@@ -123,6 +125,7 @@ class syntax_plugin_ifauthex extends DokuWiki_Syntax_Plugin
                 if($renderer->meta['ifauthex.isDiverted']) {
                     $renderer->doc = &$renderer->meta['ifauthex.originalDoc'];
                     $renderer->toc = &$renderer->meta['ifauthex.originalToc'];
+                    $TOC = &$renderer->meta['ifauthex.originalToc'];
                     $renderer->meta['ifauthex.isDiverted'] = false;
                 }
                 break;
